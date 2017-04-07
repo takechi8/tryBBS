@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Board:</strong>
+  <%= @comment.board_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @comment.name %>
+</p>
+
+<p>
+  <strong>Sentence:</strong>
+  <%= @comment.sentence %>
+</p>
+
+<p>
+  <strong>Published:</strong>
+  <%= @comment.published %>
+</p>
+
+<%= link_to '編集', edit_comment_path(@comment) %> |
+<%= link_to 'スレッドに戻る', controller: :boards, action:@comment.board_id %>
