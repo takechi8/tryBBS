@@ -16,6 +16,10 @@
 		<%= f.hidden_field :name, :value => current_user.username %>
   </div>
   <div class="field">
+	<%= f.label :img %>
+	<%= f.file_field :img %>
+  </div>
+  <div class="field">
     <%= f.label :sentence %><br>
     <%= f.text_field :sentence %>
   </div>

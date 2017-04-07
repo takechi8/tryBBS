@@ -14,6 +14,7 @@ class BoardsController < ApplicationController
   # GET /boards/1.json
   def show
 		@commentForm = Comment.new
+		
   end
 
   # GET /boards/new

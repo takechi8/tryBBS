@@ -6,11 +6,6 @@
 </p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @comment.name %>
-</p>
-
-<p>
   <strong>Sentence:</strong>
   <%= @comment.sentence %>
 </p>
@@ -20,5 +15,8 @@
   <%= @comment.published %>
 </p>
 
+<p>
+  <%= image_tag @user.img.url(:thumb) %>
+</p>
 <%= link_to '編集', edit_comment_path(@comment) %> |
 <%= link_to 'スレッドに戻る', controller: :boards, action:@comment.board_id %>

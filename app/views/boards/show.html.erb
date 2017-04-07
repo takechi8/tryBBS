@@ -12,6 +12,7 @@
 
 <div>
 <% @comments.each do |comment|%>
+<p><%= image_tag comment.img.url(:thumb) %></p>
 <p><%= comment.sentence%>[<%= comment.user.username%>:<%= comment.published%>]</p>
 </div>
 <hr>
@@ -45,6 +46,11 @@
 	  <div class="field">
 	    <%= f.label :sentence %><br>
 	    <%= f.text_field :sentence %>
+	  </div>
+		<div>
+			  <%= f.file_field :img %>
+		</div>
+	  <div class="field">
 	  </div>
 	  <div class="field">
 	    <%= f.label :published %><br>

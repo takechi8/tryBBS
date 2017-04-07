@@ -17,7 +17,6 @@
     <% @comments.each do |comment| %>
       <tr>
         <td><%= comment.board_id %></td>
-        <td><%= comment.name %></td>
         <td><%= comment.sentence %></td>
         <td><%= comment.published %></td>
         <td><%= link_to 'Show', comment %></td>
