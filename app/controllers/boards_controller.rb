@@ -13,8 +13,6 @@ class BoardsController < ApplicationController
   # GET /boards/1
   # GET /boards/1.json
   def show
-		@commentForm = Comment.new
-		
   end
 
   # GET /boards/new
@@ -70,11 +68,11 @@ class BoardsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_board
       @board = Board.find(params[:id])
-			@comments = Comment.where(board_id: @board.id).order(published: :desc)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
       params.require(:board).permit(:title, :published, :user_id)
     end
+
 end

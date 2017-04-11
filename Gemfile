@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'slim-rails'
+
 gem 'paperclip'
 
 gem 'devise'

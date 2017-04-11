@@ -1,0 +1,54 @@
+h1 = @board.title
+
+p
+  |[
+  strong = @board.user.username
+  |:
+  strong = @board.created_at
+  |]
+
+hr
+hr
+
+div
+  - @board.comments.includes(:user).each do |comment|
+      - if comment.img.present?
+          p = image_tag comment.img.url(:thumb)
+      p = comment.sentence
+      p
+        |[
+        = comment.user.username
+        |:
+        = comment.created_at
+        |]
+      hr
+
+hr
+  div
+    h2 コメント投稿
+    - if user_signed_in?
+      = form_for(@board.comments.new) do |f|
+        - if @board.comments.new.errors.any?
+            #error_explanation
+            h2 = "#{pluralize(@board.errors.count, "error")} prohibited this product from being saved:"
+            ul
+              = @board.comments.new.errors.full_messages.each do |message|
+              li = message
+
+        .field
+          = f.hidden_field :board_id, :value => @board.id
+        .field
+          = f.hidden_field :user_id, :value => current_user.id
+        .field
+          = f.text_field :sentence
+        .field
+          p
+            | 画像:
+            = f.file_field :img
+        .field
+        = f.submit "投稿"
+    - else
+	    div
+          p コメントを投稿するにはログインして下さい。
+
+= link_to 'スレッド一覧', boards_path

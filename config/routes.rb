@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get 'home/show'
 
+
   resources :comments
   resources :boards
   resources :books

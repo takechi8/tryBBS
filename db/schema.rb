@@ -11,31 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407093035) do
+ActiveRecord::Schema.define(version: 20170410100717) do
 
   create_table "boards", force: :cascade do |t|
     t.string   "title"
-    t.date     "published"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string   "isbn"
-    t.string   "title"
-    t.integer  "price"
-    t.string   "publish"
-    t.date     "published"
-    t.boolean  "cd"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.integer  "board_id"
     t.string   "sentence"
-    t.date     "published"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
@@ -43,12 +30,6 @@ ActiveRecord::Schema.define(version: 20170407093035) do
     t.string   "img_content_type"
     t.integer  "img_file_size"
     t.datetime "img_updated_at"
-  end
-
-  create_table "hellos", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
