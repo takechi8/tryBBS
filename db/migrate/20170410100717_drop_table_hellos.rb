@@ -1,4 +1,4 @@
-class DropTableHello < ActiveRecord::Migration
+class DropTableHellos < ActiveRecord::Migration
   def change
 		drop_table :hellos
   end

@@ -1,21 +1,18 @@
-
 = form_for(@board) do |f|
   - if @board.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@board.errors.count, "error")} prohibited this board from being saved:"
+      h2
+        = "#{pluralize(@board.errors.count, "error")} 入力が不正確です。"
       ul
         - @board.errors.full_messages.each do |message|
-          li = message
-
+          li
+            = message
 
   .field
 	 = f.hidden_field :user_id, :value => current_user.id
-
   .field
     p
       |タイトル:
       = f.text_field :title
-
   .actions
     = f.submit "作成"
-

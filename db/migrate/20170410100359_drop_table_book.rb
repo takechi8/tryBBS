@@ -1,4 +1,4 @@
-class DropTableBook < ActiveRecord::Migration
+class DropTableBooks < ActiveRecord::Migration
   def change
     drop_table :books
   end

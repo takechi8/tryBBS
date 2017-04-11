@@ -1,0 +1,23 @@
+h2
+  | ログイン
+
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  div
+    | ユーザー名
+    br
+    = f.text_field :username, autofocus: true
+
+  div
+    | パスワード
+    br
+    = f.password_field :password, autocomplete: "off"
+
+  - if devise_mapping.rememberable?
+    div
+      = f.check_box :remember_me
+      | 次回から自動で入力する。
+
+  div
+    = f.submit "ログイン"
+
+= render "devise/shared/links"

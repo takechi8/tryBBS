@@ -62,6 +62,8 @@ ja:
       models:
         user:
           attributes:
+            current_password:
+              blank: "変更するには現在のパスワードを入力してください。"
             username:
               blank: "ユーザー名を入力してください。"
               taken: "このユーザー名はすでに使われいます。"
@@ -72,3 +74,7 @@ ja:
               confirmation: "パスワード確認が間違っています。"
             email:
               blank: "メールアドレスを入力してください。"
+        board:
+          attributes:
+            title:
+              blank: "タイトルを入力してください。"
