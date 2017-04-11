@@ -33,18 +33,17 @@ hr
     h2
       | コメント投稿
     - if user_signed_in?
-      = form_for(@board.comments.new) do |f|
-        - if @board.comments.new.errors.any?
+      = form_for(@comment) do |f|
+        - if @comment.errors.any?
             h2
-              = "#{pluralize(@board.errors.count, "error")} 入力が不正確です。"
+              = "#{pluralize(@comment.errors.count, "error")} 入力が不正確です。"
             ul
-              = @board.comments.new.errors.full_messages.each do |message|
-              li
-                = message
+              - @comment.errors.full_messages.each do |message|
+
+                li
+                  = message
         .field
           = f.hidden_field :board_id, :value => @board.id
-        .field
-          = f.hidden_field :user_id, :value => current_user.id
         .field
           = f.text_field :sentence
         .field

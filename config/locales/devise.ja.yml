@@ -78,3 +78,7 @@ ja:
           attributes:
             title:
               blank: "タイトルを入力してください。"
+        comment:
+          attributes:
+            sentence:
+              blank: "コメントを入力してください。"

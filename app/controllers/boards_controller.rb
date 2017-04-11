@@ -8,6 +8,7 @@ class BoardsController < ApplicationController
 
   def show
     @board = Board.find(params[:id])
+    @comment = Comment.new
   end
 
   def new
@@ -15,7 +16,8 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(board_params)
+    return false unless current_user.present?
+    @board = current_user.boards.new(board_params)
     if @board.save
       redirect_to @board, notice: 'スレッドが作成されました'
     else
@@ -26,7 +28,7 @@ class BoardsController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.require(:board).permit(:title, :published, :user_id)
+      params.require(:board).permit(:title)
     end
 
 end
