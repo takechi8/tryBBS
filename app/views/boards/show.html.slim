@@ -5,7 +5,7 @@ p
   |[
   strong
     = @board.user.username
-  |:
+  |:投稿日-
   strong
     = @board.created_at
   |]
@@ -13,8 +13,9 @@ p
 hr
 hr
 
-div
-  - @board.comments.includes(:user).each do |comment|
+#test_id
+  - @board.comments.includes(:user).each_with_index do |comment, idx|
+    div id=idx.to_s+"_row" data=comment.id
       - if comment.img.present?
           p
             = image_tag comment.img.url(:thumb)
@@ -23,17 +24,21 @@ div
       p
         |[
         = comment.user.username
-        |:
-        = comment.created_at
+        |:編集日-
+        = comment.updated_at
         |]
-      hr
+        - if current_user.id == comment.user.id
+            button type="button" class="btn"
+              | 編集
+
+    hr
 
 hr
   div
     h2
       | コメント投稿
     - if user_signed_in?
-      = form_for(@comment) do |f|
+      = form_for(@comment, html: {id: :comment_form}, remote: true, authenticity_token: true) do |f|
         - if @comment.errors.any?
             h2
               = "#{pluralize(@comment.errors.count, "error")} 入力が不正確です。"
@@ -51,7 +56,7 @@ hr
             | 画像:
             = f.file_field :img
         .field
-          = f.submit "投稿"
+          = f.submit "投稿", id: "comment_form"
     - else
 	    div
           p
