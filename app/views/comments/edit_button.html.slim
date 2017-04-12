@@ -1,0 +1,23 @@
+- if @comment.img.present?
+  p
+    = image_tag @comment.img.url(:thumb)
+
+= form_for(@comment, remote: true) do |f|
+  - if @comment.errors.any?
+    h2
+      = "#{pluralize(@comment.errors.count, "error")} 入力が不正確です。"
+    ul
+      - @comment.errors.full_messages.each do |message|
+
+        li
+          = message
+  .field
+    = f.hidden_field :board_id, :value => @comment.board_id
+  .field
+    = f.text_field :sentence
+  .field
+    p
+      | 画像:
+      = f.file_field :img
+  .field
+    = f.submit '変更', class: "submit"

@@ -1,0 +1,7 @@
+$(function(){
+    var original_design;
+    original_design = "<img src='<%= @comment.img.url(:thumb) %>'><p><%= @comment.sentence %></p><p>[<%= @comment.user.username %>:編集日-<%= @comment.updated_at %>]<button type='button' class='btn'>編集</button></p>";
+    //console.log("test");
+    $(".submit").parent("div").parent("form").parent("div").html(original_design);
+});
+
