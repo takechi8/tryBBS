@@ -1,5 +1,4 @@
 class BoardsController < ApplicationController
-  # Only login users can access new.
 	before_action :authenticate_user!, only: :new
 
   def index
@@ -9,6 +8,7 @@ class BoardsController < ApplicationController
   def show
     @board = Board.find(params[:id])
     @comment = Comment.new
+    @time = Time.zone.now
   end
 
   def new
@@ -26,7 +26,6 @@ class BoardsController < ApplicationController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
       params.require(:board).permit(:title)
     end

@@ -1,6 +1,8 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 ja:
+  will_paginate:
+    page_gap: '…'
   devise:
     confirmations:
       confirmed: "アカウントが確認されました。ログインしています。"
@@ -82,3 +84,7 @@ ja:
           attributes:
             sentence:
               blank: "コメントを入力してください。"
+            public_start_date:
+              blank: "公開日を入力してください。"
+            public_end_date:
+              blank: "公開終了日を入力してください。"

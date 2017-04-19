@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410100717) do
+ActiveRecord::Schema.define(version: 20170418051802) do
 
   create_table "boards", force: :cascade do |t|
     t.string   "title"
@@ -20,16 +20,25 @@ ActiveRecord::Schema.define(version: 20170410100717) do
     t.integer  "user_id"
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.integer  "board_id"
-    t.string   "sentence"
+  create_table "comment_imgs", force: :cascade do |t|
+    t.integer  "comment_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.integer  "user_id"
     t.string   "img_file_name"
     t.string   "img_content_type"
     t.integer  "img_file_size"
     t.datetime "img_updated_at"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "board_id"
+    t.string   "sentence"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "user_id"
+    t.datetime "public_start_date"
+    t.datetime "public_end_date"
+    t.boolean  "public_presence"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170410100717) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,0 +1,52 @@
+h1
+  | 管理画面
+
+h2
+  | スレッド
+
+p
+  = link_to "<ユーザー>", "/admin/admin_users/"
+  = link_to "<コメント>", "/admin/admin_comments/"
+
+
+table
+  thead
+    tr
+      th
+        | id
+      th
+        | user_id
+      th
+        | title
+      th
+        | コメント数
+      th
+        | created_at
+      th
+        | updated_at
+      th
+        | edit
+
+  tbody
+    - @boards.includes(:user, :comments).each do |c|
+      tr
+        td
+          = c.id
+        td
+          = c.user_id
+        td
+          = c.title
+        td
+          = c.comments.length
+        td
+          = c.created_at
+        td
+          = c.updated_at
+        td
+          - @ids = c.id.to_s
+          = link_to "編集", "/admin/admin_boards/" +@ids +"/edit" +"?p=" + @page_nth
+
+= will_paginate @boards, previous_label: '前ページ', next_label: '次ページ'
+
+p
+  = @page_nth

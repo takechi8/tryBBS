@@ -2,44 +2,26 @@
  * Created by Takechi on 2017/04/11.
  */
 
-$(function(){
-    var row_id;
-    var comment_id;
-    $(document).on('click','.btn', function(){
-        row_id = $(this).parent("p").parent("div").attr("id");
-        comment_id = $("#"+row_id).attr("data");
-        $.ajax({
-            type: 'get',
-            url: '/comments/' + comment_id + '/edit_button/',
-            dataType: "html",
-            success: function(data){
-                $("#"+row_id).html(data);
-            }
-        });
+$(function() {
+    // アップロードするファイルを選択
+    $('input[type=file]').change(function() {
+        var foo = $(this);
+        var file = $(this).prop('files')[0];
+
+        // 画像以外は処理を停止
+        if (! file.type.match('image.*')) {
+            // クリア
+            $(this).val('');
+            $('span').html('');
+            return;
+        }
+
+        // 画像表示
+        var reader = new FileReader();
+        reader.onload = function() {
+            var img_src = $('<img>').attr('src', reader.result).attr('width', '80px');
+            foo.parent().children('div').html(img_src);
+        }
+        reader.readAsDataURL(file);
     });
 });
-
-
-
-
-
-
-// $(document).ready(function() {
-//     $('#comment_form').submit(function(){
-//         $.ajax({
-//             type: 'post',
-//             url: '/comments',
-//             data: {
-//                 'pd': 'こんにちは'
-//             },
-//             success: function(data){
-//                 alert(data);
-//             }
-//         });
-//         return false;
-//     });
-// });
-
-// $(function(){
-//
-// });

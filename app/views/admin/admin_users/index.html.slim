@@ -1,0 +1,51 @@
+h1
+  | 管理画面
+
+h2
+  | ユーザー
+
+p
+  = link_to "<コメント>", "/admin/admin_comments/"
+  = link_to "<スレッド>", "/admin/admin_boards/"
+
+table
+  thead
+    tr
+      th
+        | id
+      th
+        | username
+      th
+        | email
+      th
+        | role
+      th
+        | created_at
+      th
+        | updated_at
+      th
+        | edit
+
+  tbody
+    - @users.each do |c|
+      tr
+        td
+          = c.id
+        td
+          = c.username
+        td
+          = c.email
+        td
+          = c.role
+        td
+          = c.created_at
+        td
+          = c.updated_at
+        td
+          - @ids = c.id.to_s
+          = link_to "編集", "/admin/admin_users/" +@ids +"/edit" +"?p=" + @page_nth
+
+= will_paginate @users, previous_label: '前ページ', next_label: '次ページ'
+
+p
+  = @page_nth

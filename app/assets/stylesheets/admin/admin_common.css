@@ -10,8 +10,21 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require_tree ..
  *= require_self
- *= require_directory .
  */
 
 
+table{
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000;
+}
+
+thead{
+    background: skyblue;
+}
+
+td{
+    border-bottom: 1px solid #000;
+}

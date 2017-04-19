@@ -13,53 +13,88 @@ p
 hr
 hr
 
-#test_id
-  - @board.comments.includes(:user).each_with_index do |comment, idx|
-    div id=idx.to_s+"_row" data=comment.id
-      - if comment.img.present?
+#list_comment
+  - @board.comments.includes(:user, :comment_imgs).each_with_index do |comment, idx|
+    - if comment.public_presence == true && comment.public_start_date.present? && comment.public_end_date.present?
+      - if comment.public_end_date > @time && @time >= comment.public_start_date
+        div id=idx.to_s+"_row" data=comment.id
           p
-            = image_tag comment.img.url(:thumb)
-      p
-        = comment.sentence
-      p
-        |[
-        = comment.user.username
-        |:編集日-
-        = comment.updated_at
-        |]
-        - if current_user.id == comment.user.id
-            button type="button" class="btn"
-              | 編集
+            = comment.sentence
 
-    hr
+          .swiper-container
+            .swiper-wrapper
+              - comment.comment_imgs.each_with_index do |img, i|
+                - if img.img.present?
+                  .swiper-slide
+                    = image_tag img.img.url(:thumb), class: "img"
+                - break if i == 2
+            .swiper-pagination
+          p
+            |[
+            = comment.user.username
+            | |<編集日>
+            = comment.updated_at
+            | |<公開日>
+            = comment.public_start_date
+            | |<公開終了日>
+            = comment.public_end_date
+            |]
+          hr
+
+javascript:
+  var swiper = new Swiper('.swiper-container', {
+      pagination: '.swiper-pagination',
+        }
+      );
 
 hr
-  div
+div
+  - if user_signed_in?
     h2
-      | コメント投稿
-    - if user_signed_in?
-      = form_for(@comment, html: {id: :comment_form}, remote: true, authenticity_token: true) do |f|
-        - if @comment.errors.any?
-            h2
-              = "#{pluralize(@comment.errors.count, "error")} 入力が不正確です。"
-            ul
-              - @comment.errors.full_messages.each do |message|
+      | 画像アップロード
+    p
+      | 現在時刻：
+      = @time
+    = form_for @comment, :html => { :multipart => true } do |f|
+      - if @comment.errors.any?
+        h2
+          = "#{pluralize(@comment.errors.count,'error')}"
+        ul
+          - @comment.errors.full_messages.each do |message|
+            li
+              = message
 
-                li
-                  = message
-        .field
-          = f.hidden_field :board_id, :value => @board.id
-        .field
-          = f.text_field :sentence
-        .field
-          p
-            | 画像:
-            = f.file_field :img
-        .field
-          = f.submit "投稿", id: "comment_form"
-    - else
-	    div
-          p
-            | コメントを投稿するにはログインして下さい。
+      .field
+        | コメント
+        = f.text_field :sentence
+      .field
+        = f.hidden_field :board_id, :value => @board.id
+      .field
+        | 公開日
+        = f.datetime_local_field :public_start_date
+      .field
+        | 公開終了日
+        = f.datetime_local_field :public_end_date
+      .field
+        = f.hidden_field :public_presence, value: "1"
+      /.field
+      /  = f.check_box :public_presence
+      .field
+        div
+        = file_field_tag "img_array[]", class: "img_input", id: "img_array1"
+
+      .field
+        div
+        = file_field_tag "img_array[]", class: "img_input", id: "img_array2"
+
+      .field
+        div
+        = file_field_tag "img_array[]", class: "img_input", id: "img_array3"
+
+      = f.submit "アップロード"
+  - else
+    div
+      p
+        | コメントを投稿するにはログインして下さい。
 
 = link_to 'スレッド一覧', boards_path

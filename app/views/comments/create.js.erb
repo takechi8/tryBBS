@@ -1,9 +1,0 @@
-$(function(){
-    $("#comment_sentence").val("");
-    $("#test_id").append("<div style='display:none;'><p><%= @comment.sentence %></p><p>[<%= @comment.user.username %>:編集日-<%= @comment.updated_at %>]<button class='btn' type='button'>編集</button></p><hr></div>");
-    $("#test_id div:last-child").slideDown();
-});
-
-
-
-

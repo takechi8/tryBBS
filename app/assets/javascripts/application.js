@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require boards
+//= require swiper
 //= require_tree .

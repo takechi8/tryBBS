@@ -1,0 +1,56 @@
+
+= form_for(@comment, url: admin_admin_comment_path(@comment), :html => { :multipart => true }) do |f|
+  - if @comment.errors.any?
+      h2
+        = "#{pluralize(@comment.errors.count, "error")} 入力が不正確です。"
+      ul
+        - @comment.errors.full_messages.each do |message|
+          li
+            = message
+
+  .field
+    p
+      =  hidden_field_tag :page_nth, @page_nth
+    p
+      | user_id:
+      = f.text_field :user_id
+    p
+      | board_id:
+      = f.text_field :board_id
+    p
+      | sentence:
+      = f.text_field :sentence
+    p
+      | public_presence:
+      = f.check_box :public_presence
+    p
+      | public_start_date:
+      = f.datetime_local_field :public_start_date
+    p
+      | public_end_date:
+      = f.datetime_local_field :public_end_date
+
+    .field
+      div
+        - if @comment.comment_imgs[0].present?
+          = image_tag @comment.comment_imgs[0].img.url(:thumb)
+      = file_field_tag "img_array[0]", class: "img_input", id: "img_array1"
+    .field
+      div
+        - if @comment.comment_imgs[1].present?
+          = image_tag @comment.comment_imgs[1].img.url(:thumb)
+      = file_field_tag "img_array[1]", class: "img_input", id: "img_array2"
+    .field
+      div
+        - if @comment.comment_imgs[2].present?
+          = image_tag @comment.comment_imgs[2].img.url(:thumb)
+      = file_field_tag "img_array[2]", class: "img_input", id: "img_array3"
+
+  .actions
+    = f.submit "編集"
+
+
+= link_to '戻る', :back
+
+
+

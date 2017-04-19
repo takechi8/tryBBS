@@ -1,0 +1,32 @@
+
+= form_for(@board, url: admin_admin_board_path(@board)) do |f|
+  - if @board.errors.any?
+      h2
+        = "#{pluralize(@board.errors.count, "error")} 入力が不正確です。"
+      ul
+        - @board.errors.full_messages.each do |message|
+          li
+            = message
+
+  .field
+    p
+      =  hidden_field_tag :page_nth, @page_nth
+    p
+      | user_id:
+      = f.text_field :user_id
+    p
+      | title:
+      = f.text_field :title
+    p
+      | created_at:
+      = f.datetime_local_field :created_at
+    p
+      | updated_at:
+      = f.datetime_local_field :updated_at
+
+  .actions
+    = f.submit "編集"
+
+= link_to '戻る', :back
+
+

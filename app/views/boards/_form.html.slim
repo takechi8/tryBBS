@@ -1,6 +1,5 @@
 = form_for(@board) do |f|
   - if @board.errors.any?
-    #error_explanation
       h2
         = "#{pluralize(@board.errors.count, "error")} 入力が不正確です。"
       ul

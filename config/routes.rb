@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  #resources :comments
+  resources :comments
   resources :boards
-	resources :comments do
-		member do
-			get :edit_button
-		end
-	end
+  resources :comment_imgs
+
+  namespace :admin do
+	  resources :admin_comments
+	  resources :admin_boards
+	  resources :admin_users
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
