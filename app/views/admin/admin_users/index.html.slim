@@ -4,9 +4,7 @@ h1
 h2
   | ユーザー
 
-p
-  = link_to "<コメント>", "/admin/admin_comments/"
-  = link_to "<スレッド>", "/admin/admin_boards/"
+= render "admin/shared/links", item: "user"
 
 - page_nth = @users.current_page
 
@@ -46,7 +44,8 @@ table
         td
           = link_to "削除", "/admin/admin_users/#{c.id}?p=#{page_nth}", :method => :delete, data: {confirm: "本当に削除しますか？"}
 
-= will_paginate @users, previous_label: '前ページ', next_label: '次ページ'
+= render "admin/shared/paginate", item: @users
+
 p
   = page_nth
   | ページ目

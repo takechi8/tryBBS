@@ -1,0 +1,7 @@
+p
+  - unless item == "comment"
+    = link_to "<コメント>", "/admin/admin_comments/"
+  - unless item == "board"
+    = link_to "<スレッド>", "/admin/admin_boards/"
+  - unless item == "user"
+    = link_to "<ユーザー>", "/admin/admin_users/"

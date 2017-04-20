@@ -4,9 +4,7 @@ h1
 h2
   | コメント
 
-p
-  = link_to "<スレッド>", "/admin/admin_boards/"
-  = link_to "<ユーザー>", "/admin/admin_users/"
+= render "admin/shared/links", item: "comment"
 
 - page_nth = @comments.current_page
 table
@@ -42,24 +40,22 @@ table
         | delete
 
   tbody
-    - @comments.includes(:user, :comment_imgs).each do |c|
+    - @comments.includes(:user).each do |c|
       tr
         td
           = c.id
         td
           = c.user_id
         td
-          - if c.user.present?
-            = c.user.username
+          = c.user.username
         td
-          - if c.user.present?
-            = c.user.role
+          = c.user.role
         td
           = c.board_id
         td
           = c.sentence
         td
-          = c.comment_imgs.size
+          = c.comment_imgs_count
         td
           = c.created_at
         td
@@ -75,8 +71,7 @@ table
         td
           = link_to "削除", "/admin/admin_comments/#{c.id}?p=#{page_nth}", :method => :delete, data: {confirm: "本当に削除しますか？"}
 
-
-= will_paginate @comments, previous_label: '前ページ', next_label: '次ページ'
+= render "admin/shared/paginate", item: @comments
 p
   = page_nth
   | ページ目

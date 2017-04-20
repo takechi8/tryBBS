@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
 	validates :sentence, presence: true
+	validates :user_id, presence: true
 	belongs_to :user
 	belongs_to :board, counter_cache: true
 	has_many :comment_imgs

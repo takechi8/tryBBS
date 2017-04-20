@@ -72,15 +72,15 @@ div
       .field
         = f.hidden_field :public_presence, value: "1"
       .field
-        div
+        .img_preview
         = file_field_tag "img_array[]", class: "img_input", id: "img_array1"
 
       .field
-        div
+        .img_preview
         = file_field_tag "img_array[]", class: "img_input", id: "img_array2"
 
       .field
-        div
+        .img_preview
         = file_field_tag "img_array[]", class: "img_input", id: "img_array3"
 
       = f.submit "アップロード"

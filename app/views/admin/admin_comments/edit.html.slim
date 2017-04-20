@@ -52,7 +52,7 @@ h1
 
     hr
     .field
-      div
+      .img_preview
         - if @comment.comment_imgs[0].present?
           = image_tag @comment.comment_imgs[0].img.url(:thumb)
           | 削除：
@@ -60,7 +60,7 @@ h1
       = file_field_tag "img_array[0]", class: "img_input", id: "img_array1"
     hr
     .field
-      div
+      .img_preview
         - if @comment.comment_imgs[1].present?
           = image_tag @comment.comment_imgs[1].img.url(:thumb)
           | 削除：
@@ -68,7 +68,7 @@ h1
       = file_field_tag "img_array[1]", class: "img_input", id: "img_array2"
     hr
     .field
-      div
+      .img_preview
         - if @comment.comment_imgs[2].present?
           = image_tag @comment.comment_imgs[2].img.url(:thumb)
           | 削除

@@ -4,9 +4,7 @@ h1
 h2
   | スレッド
 
-p
-  = link_to "<ユーザー>", "/admin/admin_users/"
-  = link_to "<コメント>", "/admin/admin_comments/"
+= render "admin/shared/links", item: "board"
 
 - page_nth = @boards.current_page
 table
@@ -32,7 +30,7 @@ table
         | delete
 
   tbody
-    - @boards.includes(:user, :comments).each do |c|
+    - @boards.includes(:user).each do |c|
       tr
         td
           = c.id
@@ -43,7 +41,7 @@ table
         td
           = c.title
         td
-          = c.comments.size
+          = c.comments_count
         td
           = c.created_at
         td
@@ -53,7 +51,7 @@ table
         td
           = link_to "削除", "/admin/admin_boards/#{c.id}?p=#{page_nth}", :method => :delete, data: {confirm: "本当に削除しますか？"}
 
-= will_paginate @boards, previous_label: '前ページ', next_label: '次ページ'
+= render "admin/shared/paginate", item: @boards
 p
   = page_nth
   | ページ目

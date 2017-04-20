@@ -21,17 +21,19 @@ class Admin::AdminCommentsController < ApplicationController
     @comment.attributes = admin_comment_params
 
     #日時の更新
-    start_date = params[:comment]["public_start_date"]
-    start_h = params[:start_time][0]
-    start_m = params[:start_time][1]
-    start_time = Time.zone.parse(start_date + ' ' + start_h + ':' + start_m)
-    @comment.public_start_date = start_time
+    @comment.public_start_date = Time.zone.parse(
+                                    params[:comment]["public_start_date"] +
+                                    ' '                                   +
+                                    params[:start_time][0]                +
+                                    ':'                                   +
+                                    params[:start_time][1])
 
-    end_date = params[:comment]["public_end_date"]
-    end_h = params[:end_time][0]
-    end_m = params[:end_time][1]
-    end_time = Time.zone.parse(end_date + ' ' + end_h + ':' + end_m)
-    @comment.public_end_date = end_time
+    @comment.public_end_date = Time.zone.parse(
+                                    params[:comment]["public_end_date"] +
+                                    ' '                                 +
+                                    params[:end_time][0]                +
+                                    ':'                                 +
+                                    params[:end_time][1])
 
     #センテンスのvalidate
     if @comment.sentence.length == 0

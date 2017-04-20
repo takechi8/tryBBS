@@ -26,17 +26,20 @@ class Admin::AdminBoardsController < ApplicationController
     @board = Board.find(params[:id])
     @board.attributes = admin_board_params
 
-    created_date = params[:board]["created_at"]
-    created_h = params[:created_time][0]
-    created_m = params[:created_time][1]
-    created_time = Time.zone.parse(created_date + ' ' + created_h + ':' + created_m)
-    @board.created_at = created_time
+    #日時の更新
+    @board.created_at = Time.zone.parse(
+                          params[:board]["created_at"] +
+                          ' '                          +
+                          params[:created_time][0]     +
+                          ':'                          +
+                          params[:created_time][1])
 
-    updated_date = params[:board]["updated_at"]
-    updated_h = params[:updated_time][0]
-    updated_m = params[:updated_time][1]
-    updated_time = Time.zone.parse(updated_date + ' ' + updated_h + ':' + updated_m)
-    @board.updated_at = updated_time
+    @board.updated_at = Time.zone.parse(
+                          params[:board]["updated_at"] +
+                          ' '                          +
+                          params[:updated_time][0]     +
+                          ':'                          +
+                          params[:updated_time][1])
 
     if @board.save(validate: false)
       if params[:page_nth].present?
