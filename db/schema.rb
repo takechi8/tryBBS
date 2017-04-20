@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418051802) do
+ActiveRecord::Schema.define(version: 20170419062705) do
 
   create_table "boards", force: :cascade do |t|
     t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "user_id"
+    t.integer  "comments_count", default: 0
   end
 
   create_table "comment_imgs", force: :cascade do |t|
@@ -33,12 +34,13 @@ ActiveRecord::Schema.define(version: 20170418051802) do
   create_table "comments", force: :cascade do |t|
     t.integer  "board_id"
     t.string   "sentence"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.datetime "public_start_date"
     t.datetime "public_end_date"
     t.boolean  "public_presence"
+    t.integer  "comment_imgs_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|

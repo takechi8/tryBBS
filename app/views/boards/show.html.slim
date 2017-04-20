@@ -15,7 +15,9 @@ hr
 
 #list_comment
   - @board.comments.includes(:user, :comment_imgs).each_with_index do |comment, idx|
-    - if comment.public_presence == true && comment.public_start_date.present? && comment.public_end_date.present?
+    - if comment.public_presence == true && comment.public_start_date.present?
+      - unless comment.public_end_date.present?
+          - comment.public_end_date = @time + 1
       - if comment.public_end_date > @time && @time >= comment.public_start_date
         div id=idx.to_s+"_row" data=comment.id
           p
@@ -34,10 +36,6 @@ hr
             = comment.user.username
             | |<編集日>
             = comment.updated_at
-            | |<公開日>
-            = comment.public_start_date
-            | |<公開終了日>
-            = comment.public_end_date
             |]
           hr
 
@@ -70,15 +68,9 @@ div
       .field
         = f.hidden_field :board_id, :value => @board.id
       .field
-        | 公開日
-        = f.datetime_local_field :public_start_date
-      .field
-        | 公開終了日
-        = f.datetime_local_field :public_end_date
+        = f.hidden_field :public_start_date, :value => @time
       .field
         = f.hidden_field :public_presence, value: "1"
-      /.field
-      /  = f.check_box :public_presence
       .field
         div
         = file_field_tag "img_array[]", class: "img_input", id: "img_array1"

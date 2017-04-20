@@ -1,4 +1,7 @@
 
+h1
+  | コメント編集
+
 = form_for(@comment, url: admin_admin_comment_path(@comment), :html => { :multipart => true }) do |f|
   - if @comment.errors.any?
       h2
@@ -12,39 +15,66 @@
     p
       =  hidden_field_tag :page_nth, @page_nth
     p
-      | user_id:
-      = f.text_field :user_id
-    p
-      | board_id:
+      | スレッドid:
       = f.text_field :board_id
     p
-      | sentence:
+      | コメント:
       = f.text_field :sentence
     p
-      | public_presence:
+      | 公開許可:
       = f.check_box :public_presence
     p
-      | public_start_date:
-      = f.datetime_local_field :public_start_date
+      | 公開開始日:
+      = f.date_field :public_start_date
+      - if @comment.public_start_date.present?
+        - hs = @comment.public_start_date.hour
+        - ms = @comment.public_start_date.min
+      - else
+        - hs = "0"
+        - ms = "0"
+      = number_field_tag "start_time[]", hs, max: 23, min: 0
+      | 時
+      = number_field_tag "start_time[]", ms, max: 59, min: 0
+      | 分
     p
-      | public_end_date:
-      = f.datetime_local_field :public_end_date
+      | 公開終了日:
+      = f.date_field :public_end_date
+      - if @comment.public_end_date.present?
+        - he = @comment.public_end_date.hour
+        - me = @comment.public_end_date.min
+      - else
+        - he = "0"
+        - me = "0"
+      = number_field_tag "end_time[]", he, max: 23, min: 0
+      | 時
+      = number_field_tag "end_time[]", me, max: 59, min: 0
+      | 分
 
+    hr
     .field
       div
         - if @comment.comment_imgs[0].present?
           = image_tag @comment.comment_imgs[0].img.url(:thumb)
+          | 削除：
+          = check_box_tag "delete[]", @comment.comment_imgs[0].id
       = file_field_tag "img_array[0]", class: "img_input", id: "img_array1"
+    hr
     .field
       div
         - if @comment.comment_imgs[1].present?
           = image_tag @comment.comment_imgs[1].img.url(:thumb)
+          | 削除：
+          = check_box_tag "delete[]", @comment.comment_imgs[1].id
       = file_field_tag "img_array[1]", class: "img_input", id: "img_array2"
+    hr
     .field
       div
         - if @comment.comment_imgs[2].present?
           = image_tag @comment.comment_imgs[2].img.url(:thumb)
+          | 削除
+          = check_box_tag "delete[]", @comment.comment_imgs[2].id
       = file_field_tag "img_array[2]", class: "img_input", id: "img_array3"
+    hr
 
   .actions
     = f.submit "編集"

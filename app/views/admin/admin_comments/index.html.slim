@@ -8,36 +8,38 @@ p
   = link_to "<スレッド>", "/admin/admin_boards/"
   = link_to "<ユーザー>", "/admin/admin_users/"
 
-
+- page_nth = @comments.current_page
 table
   thead
     tr
       th
         | id
       th
-        | user_id
+        | ユーザーid
       th
-        | user.username
+        | ユーザー名
       th
-        | user.role
+        | ロール
       th
-        | board_id
+        | スレッドid
       th
-        | sentence
+        | コメント
       th
-        | comment_imgs.length
+        | コメント画像数
       th
-        | created_at
+        | 作成日
       th
-        | updated_at
+        | 更新日
       th
-        | public_presence
+        | 公開許可
       th
-        | public_start_date
+        | 公開開始日
       th
-        | public_end_date
+        | 公開終了日
       th
         | edit
+      th
+        | delete
 
   tbody
     - @comments.includes(:user, :comment_imgs).each do |c|
@@ -57,7 +59,7 @@ table
         td
           = c.sentence
         td
-          = c.comment_imgs.length
+          = c.comment_imgs.size
         td
           = c.created_at
         td
@@ -69,11 +71,12 @@ table
         td
           = c.public_end_date
         td
-          - @ids = c.id.to_s
-          = link_to "編集", "/admin/admin_comments/" +@ids +"/edit" +"?p=" + @page_nth
+          = link_to "編集", "/admin/admin_comments/#{c.id}/edit?p=#{page_nth}"
+        td
+          = link_to "削除", "/admin/admin_comments/#{c.id}?p=#{page_nth}", :method => :delete, data: {confirm: "本当に削除しますか？"}
 
 
 = will_paginate @comments, previous_label: '前ページ', next_label: '次ページ'
-
 p
-  = @page_nth
+  = page_nth
+  | ページ目

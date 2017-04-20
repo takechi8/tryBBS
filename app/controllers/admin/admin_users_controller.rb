@@ -40,6 +40,17 @@ class Admin::AdminUsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    if params[:p].present?
+      page_nth = params[:p]
+    else
+      page_nth = "1"
+    end
+    redirect_to '/admin/admin_users?page=' + page_nth
+  end
+
   private
   def admin_user_params
     params.require(:user).permit(:username, :email, :role)

@@ -5,12 +5,6 @@ class Admin::AdminCommentsController < ApplicationController
 
   def index
     @comments = Comment.page(params[:page])
-
-    if params[:page].present?
-      @page_nth = params[:page]
-    else
-      @page_nth = "1"
-    end
   end
 
   def edit
@@ -25,6 +19,19 @@ class Admin::AdminCommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     @comment.attributes = admin_comment_params
+
+    #日時の更新
+    start_date = params[:comment]["public_start_date"]
+    start_h = params[:start_time][0]
+    start_m = params[:start_time][1]
+    start_time = Time.zone.parse(start_date + ' ' + start_h + ':' + start_m)
+    @comment.public_start_date = start_time
+
+    end_date = params[:comment]["public_end_date"]
+    end_h = params[:end_time][0]
+    end_m = params[:end_time][1]
+    end_time = Time.zone.parse(end_date + ' ' + end_h + ':' + end_m)
+    @comment.public_end_date = end_time
 
     #センテンスのvalidate
     if @comment.sentence.length == 0
@@ -51,7 +58,15 @@ class Admin::AdminCommentsController < ApplicationController
       end
     end
 
-    #validateのスッキプ
+    #イメージの削除
+    if params[:delete].present?
+      params[:delete].each do |id|
+        @comment_imgs = CommentImg.find(id)
+        @comment_imgs.destroy
+      end
+    end
+
+    #validateのスキップ
     if @comment.save(validate: false)
       if params[:page_nth].present?
         page_nth = params[:page_nth]
@@ -62,12 +77,22 @@ class Admin::AdminCommentsController < ApplicationController
     else
       render :edit
     end
+  end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    if params[:p].present?
+      page_nth = params[:p]
+    else
+      page_nth = "1"
+    end
+    redirect_to '/admin/admin_comments?page=' + page_nth
   end
 
   private
   def admin_comment_params
-    params.require(:comment).permit(:board_id, :sentence, :user_id, :public_presence, :public_start_date, :public_end_date)
+    params.require(:comment).permit(:board_id, :sentence, :public_presence)
   end
 
 end

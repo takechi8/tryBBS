@@ -8,24 +8,28 @@ p
   = link_to "<ユーザー>", "/admin/admin_users/"
   = link_to "<コメント>", "/admin/admin_comments/"
 
-
+- page_nth = @boards.current_page
 table
   thead
     tr
       th
         | id
       th
-        | user_id
+        | ユーザーid
       th
-        | title
+        | ユーザー名
+      th
+        | スレッド名
       th
         | コメント数
       th
-        | created_at
+        | 作成日
       th
-        | updated_at
+        | 更新日
       th
         | edit
+      th
+        | delete
 
   tbody
     - @boards.includes(:user, :comments).each do |c|
@@ -35,18 +39,21 @@ table
         td
           = c.user_id
         td
+          = c.user.username
+        td
           = c.title
         td
-          = c.comments.length
+          = c.comments.size
         td
           = c.created_at
         td
           = c.updated_at
         td
-          - @ids = c.id.to_s
-          = link_to "編集", "/admin/admin_boards/" +@ids +"/edit" +"?p=" + @page_nth
+          = link_to "編集", "/admin/admin_boards/#{c.id}/edit?p=#{page_nth}"
+        td
+          = link_to "削除", "/admin/admin_boards/#{c.id}?p=#{page_nth}", :method => :delete, data: {confirm: "本当に削除しますか？"}
 
 = will_paginate @boards, previous_label: '前ページ', next_label: '次ページ'
-
 p
-  = @page_nth
+  = page_nth
+  | ページ目

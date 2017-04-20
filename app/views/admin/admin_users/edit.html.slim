@@ -1,4 +1,7 @@
 
+h1
+  | ユーザー編集
+
 = form_for(@user, url: admin_admin_user_path(@user)) do |f|
   - if @user.errors.any?
       h2
@@ -12,13 +15,13 @@
     p
       =  hidden_field_tag :page_nth, @page_nth
     p
-      | username:
+      | ユーザー名:
       = f.text_field :username
     p
-      | email:
+      | メールアドレス:
       = f.text_field :email
     p
-      | role:
+      | ロール:
       = f.text_field :role
 
 
@@ -28,5 +31,3 @@
 
 
 = link_to '戻る', :back
-
-

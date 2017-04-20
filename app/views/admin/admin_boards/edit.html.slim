@@ -1,4 +1,7 @@
 
+h1
+  | スレッド編集
+
 = form_for(@board, url: admin_admin_board_path(@board)) do |f|
   - if @board.errors.any?
       h2
@@ -12,20 +15,26 @@
     p
       =  hidden_field_tag :page_nth, @page_nth
     p
-      | user_id:
-      = f.text_field :user_id
-    p
-      | title:
+      | スレッド名:
       = f.text_field :title
     p
-      | created_at:
-      = f.datetime_local_field :created_at
+      | 作成日:
+      = f.date_field :created_at
+      = number_field_tag "created_time[]", @board.created_at.hour, max: 23, min: 0
+      | 時
+      = number_field_tag "created_time[]", @board.created_at.min, max: 59, min: 0
+      | 分
     p
-      | updated_at:
-      = f.datetime_local_field :updated_at
+      | 更新日:
+      = f.date_field :updated_at
+      = number_field_tag "updated_time[]", @board.updated_at.hour, max: 23, min: 0
+      | 時
+      = number_field_tag "updated_time[]", @board.updated_at.min, max: 59, min: 0
+      | 分
 
   .actions
     = f.submit "編集"
+
 
 = link_to '戻る', :back
 
